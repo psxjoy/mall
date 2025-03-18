@@ -1,2 +1,2 @@
 # mall
-priavet mall project
+private mall project

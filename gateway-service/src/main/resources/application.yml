@@ -6,9 +6,21 @@ spring:
     name : gateway-service
   main:
     allow-bean-definition-overriding: true
-
   cloud:
     nacos:
       discovery:
-        server-addr:
+        server-addr: 192.168.163.161:8848
       config:
+        server-addr: 192.168.163.161:8848
+        file-extension: yaml
+    gateway:
+      discovery:
+        locator:
+          enabled: true # gateway 可以从nacos 发现服务。 过 gateway 调用其他微服务
+      routes:
+        - id: user_service_route #自己命名的，只要唯一即可
+          uri: lb://user-service # 强对应user-service的spring-application-name
+          predicates:
+            - Path=/** #todo
+          filters:
+            - StripPrefix=1 #todo 使用过滤器
